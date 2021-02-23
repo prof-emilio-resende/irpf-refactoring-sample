@@ -1,39 +1,43 @@
 package fit.core;
 
+import fit.application.abstractions.DiscountTable;
+import fit.application.abstractions.RateTable;
+import fit.application.factories.DiscountTableFactory;
+import fit.application.factories.RateTableFactory;
+import fit.domain.Person;
+
 public class IrpfCalculator {
-  /**
-   *
-   */
-  private static final double EXEMPTION_VALUE_2021 = 1903.98;
+  
+  private final RateTable rateTable;
+  private final DiscountTable discountTable;
+  private Person person;
 
-  private IrpfCalculator() {
-    throw new IllegalStateException("Utility class");
+  public IrpfCalculator(int year, Person person) {
+    super();
+    this.rateTable = RateTableFactory.build(year);
+    this.discountTable = DiscountTableFactory.build(year);
+    this.person = person;
   }
 
-  public static double calculateBaseSalary(double totalSalary) {
-    return totalSalary - (totalSalary * 0.11);
+  public double calculateBaseSalary() {
+    return this.person.getTotalSalary() - this.rateTable.getInss(this.person.getTotalSalary());
   }
 
-  public static double calculateExemption() {
-    return EXEMPTION_VALUE_2021;
+  public double calculateExemption() {
+    return this.discountTable.getExemptionValue();
   }
 
-  public static double calculateDiscount(double baseSalary) {
-    return baseSalary - calculateExemption();
+  public double calculateDiscount() {
+    return this.calculateBaseSalary() - this.calculateExemption();
   }
 
-  public static double calculateTaxLayer(double baseSalary) {
-    if (baseSalary <= 1903.98) return 0.0;
-    if (baseSalary <= 2826.65) return 0.075;
-    if (baseSalary <= 3751.05) return 0.15;
-    if (baseSalary <= 4664.68) return 0.225;
-    return 0.275;
+  public double calculateTaxLayer() {
+    return this.rateTable.getRate(this.person.getTotalSalary());
   }
 
-  public static double calculateIrpf(double totalSalary) {
-    var baseSalary = calculateBaseSalary(totalSalary);
-    var discountValue = calculateDiscount(baseSalary);
-    var taxValue = calculateTaxLayer(baseSalary);
+  public double calculate() {
+    var discountValue = this.calculateDiscount();
+    var taxValue = this.calculateTaxLayer();
 
     return discountValue * taxValue;
   }
