@@ -7,7 +7,7 @@ import fit.application.factories.RateTableFactory;
 import fit.domain.Person;
 
 public class IrpfCalculator {
-  
+
   private final RateTable rateTable;
   private final DiscountTable discountTable;
   private Person person;
@@ -20,7 +20,11 @@ public class IrpfCalculator {
   }
 
   public double calculateBaseSalary() {
-    return this.person.getTotalSalary() - this.rateTable.getInss(this.person.getTotalSalary());
+    var totalSalary = this.person.getTotalSalary();
+    var inss = this.rateTable.getInss(this.person.getTotalSalary());
+    var dependentsDisccount = this.rateTable.getDependents(this.person.getDependentsNumber());
+
+    return totalSalary - inss - dependentsDisccount;
   }
 
   public double calculateExemption() {
@@ -32,7 +36,7 @@ public class IrpfCalculator {
   }
 
   public double calculateTaxLayer() {
-    return this.rateTable.getRate(this.person.getTotalSalary());
+    return this.rateTable.getRate(this.calculateBaseSalary());
   }
 
   public double calculate() {

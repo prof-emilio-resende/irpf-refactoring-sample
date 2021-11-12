@@ -31,10 +31,10 @@ public class AppTest
         var year = 2021;
         var totalSalary = 3000.00;
         var dependents  = 0;
-        var totalDiscountExpected = 2233.98;
+        var totalDiscountExpected = 766.02;
 
         // act
-        var actualDiscountValue = new IrpfCalculator(year, new Person(totalSalary, 0)).calculateDiscount();
+        var actualDiscountValue = new IrpfCalculator(year, new Person(totalSalary, dependents)).calculateDiscount();
 
         // assert
         assertEquals(totalDiscountExpected, actualDiscountValue, 0.01);
@@ -49,10 +49,10 @@ public class AppTest
         var irpfValueExpected = 57.45;
 
         // act
-        var actualIrpfValue = new IrpfCalculator(year, new Person(totalSalary, 0)).calculate();
+        var actualIrpfValue = new IrpfCalculator(year, new Person(totalSalary, dependents)).calculate();
 
         // assert
-        assertEquals(actualIrpfValue, irpfValueExpected, 0.01);
+        assertEquals(irpfValueExpected, actualIrpfValue, 0.01);
     }
 
     @Test
@@ -64,9 +64,9 @@ public class AppTest
         var irpfValueExpected = 62.39;
 
         // act
-        var actualIrpfValue = new IrpfCalculator(year, new Person(totalSalary, 0)).calculate();
+        var actualIrpfValue = new IrpfCalculator(year, new Person(totalSalary, dependents)).calculate();
 
         // assert
-        assertEquals(actualIrpfValue, irpfValueExpected, 0.01);
+        assertEquals(irpfValueExpected, actualIrpfValue, 0.01);
     }
 }

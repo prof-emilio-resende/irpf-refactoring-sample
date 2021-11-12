@@ -5,6 +5,7 @@ import fit.application.abstractions.RateTable;
 public class RateTable2021 implements RateTable {
 
     private final double inssRate = 0.11;
+    private final double dependentDisccount = 189.59;
 
     @Override
     public double getInss(double baseSalary) {
@@ -18,6 +19,11 @@ public class RateTable2021 implements RateTable {
         if (baseSalary <= 3751.05) return 0.15;
         if (baseSalary <= 4664.68) return 0.225;
         return 0.275;
+    }
+
+    @Override
+    public double getDependents(int numberOfDependents) {
+        return numberOfDependents * dependentDisccount;
     }
     
 }
