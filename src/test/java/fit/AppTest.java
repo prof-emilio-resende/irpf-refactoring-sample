@@ -51,7 +51,7 @@ public class AppTest
         var actualIrpfValue = new IrpfCalculator(year, totalSalary, dependents).calculate();
 
         // assert
-        assertEquals(actualIrpfValue, irpfValueExpected, 0.01);
+        assertEquals(irpfValueExpected, actualIrpfValue, 0.01);
     }
 
     @Test
@@ -66,6 +66,6 @@ public class AppTest
         var actualIrpfValue = new IrpfCalculator(year, totalSalary, dependents).calculate();
 
         // assert
-        assertEquals(actualIrpfValue, irpfValueExpected, 0.01);
+        assertEquals(irpfValueExpected, actualIrpfValue, 0.01);
     }
 }

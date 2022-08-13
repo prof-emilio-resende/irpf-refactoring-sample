@@ -5,21 +5,38 @@ public class IrpfCalculator {
    *
    */
   private static final double EXEMPTION_VALUE_2021 = 1903.98;
+  private static final double INSS_VALUE_2021 = 0.11;
+  private static final double DEPENDENT_VALUE_2021 = 189.59;
 
-  private IrpfCalculator() {
-    throw new IllegalStateException("Utility class");
+  private int year;
+  private double totalSalary;
+  private int dependents;
+
+  public IrpfCalculator(int year, double totalSalary, int dependents) {
+    super();
+    this.year = year;
+    this.totalSalary = totalSalary;
+    this.dependents = dependents;
   }
 
-  public static double calculateBaseSalary(double totalSalary) {
-    return totalSalary - (totalSalary * 0.11);
+  public double calculateInssValue() {
+    return this.totalSalary * INSS_VALUE_2021;
+  }
+
+  public double calculateDependentsValue() {
+    return this.dependents * DEPENDENT_VALUE_2021;
+  }
+
+  public double calculateBaseSalary() {
+    return this.totalSalary - this.calculateDependentsValue() - this.calculateInssValue();
   }
 
   public static double calculateExemption() {
     return EXEMPTION_VALUE_2021;
   }
 
-  public static double calculateDiscount(double baseSalary) {
-    return baseSalary - calculateExemption();
+  public double calculateDiscount() {
+    return this.calculateInssValue() + IrpfCalculator.calculateExemption();
   }
 
   public static double calculateTaxLayer(double baseSalary) {
@@ -30,11 +47,10 @@ public class IrpfCalculator {
     return 0.275;
   }
 
-  public static double calculateIrpf(double totalSalary) {
-    var baseSalary = calculateBaseSalary(totalSalary);
-    var discountValue = calculateDiscount(baseSalary);
-    var taxValue = calculateTaxLayer(baseSalary);
+  public double calculate() {
+    var salaryForIrpf = this.calculateBaseSalary() - IrpfCalculator.calculateExemption();
+    var taxValue = IrpfCalculator.calculateTaxLayer(this.calculateBaseSalary());
 
-    return discountValue * taxValue;
+    return salaryForIrpf * taxValue;
   }
 }
