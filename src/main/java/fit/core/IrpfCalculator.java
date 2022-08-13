@@ -1,7 +1,9 @@
 package fit.core;
 
-import fit.application.impl.DiscountTable;
-import fit.application.impl.RateTable;
+import fit.application.abstracts.DiscountTable;
+import fit.application.abstracts.RateTable;
+import fit.application.impl.DiscountTable2021;
+import fit.application.impl.RateTable2021;
 import fit.domain.Person;
 
 public class IrpfCalculator {
@@ -14,8 +16,8 @@ public class IrpfCalculator {
     super();
     this.year = year;
     this.person = person;
-    this.rateTable = new RateTable();
-    this.discountTable = new DiscountTable();
+    this.rateTable = new RateTable2021();
+    this.discountTable = new DiscountTable2021();
   }
 
   public double calculateInssValue() {
