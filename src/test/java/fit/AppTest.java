@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import fit.core.IrpfCalculator;
+import fit.domain.Person;
 
 /**
  * Unit test for simple App.
@@ -19,7 +20,7 @@ public class AppTest
         var totalSalary = 3000.00;
         var baseSalaryExpected = 2670.00;
         // act
-        var actualBaseSalary = new IrpfCalculator(year, totalSalary, 0).calculateBaseSalary();
+        var actualBaseSalary = new IrpfCalculator(year, new Person(totalSalary, 0)).calculateBaseSalary();
         // assert
         assertEquals(baseSalaryExpected, actualBaseSalary, 0.01);
     }
@@ -33,7 +34,7 @@ public class AppTest
         var totalDiscountExpected = 2233.98;
 
         // act
-        var actualDiscountValue = new IrpfCalculator(year, totalSalary, dependents).calculateDiscount();
+        var actualDiscountValue = new IrpfCalculator(year, new Person(totalSalary, dependents)).calculateDiscount();
 
         // assert
         assertEquals(totalDiscountExpected, actualDiscountValue, 0.01);
@@ -48,7 +49,7 @@ public class AppTest
         var irpfValueExpected = 57.45;
 
         // act
-        var actualIrpfValue = new IrpfCalculator(year, totalSalary, dependents).calculate();
+        var actualIrpfValue = new IrpfCalculator(year, new Person(totalSalary, dependents)).calculate();
 
         // assert
         assertEquals(irpfValueExpected, actualIrpfValue, 0.01);
@@ -63,7 +64,7 @@ public class AppTest
         var irpfValueExpected = 62.39;
 
         // act
-        var actualIrpfValue = new IrpfCalculator(year, totalSalary, dependents).calculate();
+        var actualIrpfValue = new IrpfCalculator(year,  new Person(totalSalary, dependents)).calculate();
 
         // assert
         assertEquals(irpfValueExpected, actualIrpfValue, 0.01);

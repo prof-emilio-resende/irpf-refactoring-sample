@@ -1,5 +1,7 @@
 package fit.core;
 
+import fit.domain.Person;
+
 public class IrpfCalculator {
   /**
    *
@@ -9,26 +11,24 @@ public class IrpfCalculator {
   private static final double DEPENDENT_VALUE_2021 = 189.59;
 
   private int year;
-  private double totalSalary;
-  private int dependents;
+  private Person person;
 
-  public IrpfCalculator(int year, double totalSalary, int dependents) {
+  public IrpfCalculator(int year, Person person) {
     super();
     this.year = year;
-    this.totalSalary = totalSalary;
-    this.dependents = dependents;
+    this.person = person;
   }
 
   public double calculateInssValue() {
-    return this.totalSalary * INSS_VALUE_2021;
+    return this.person.getTotalSalary() * INSS_VALUE_2021;
   }
 
   public double calculateDependentsValue() {
-    return this.dependents * DEPENDENT_VALUE_2021;
+    return this.person.getDependents() * DEPENDENT_VALUE_2021;
   }
 
   public double calculateBaseSalary() {
-    return this.totalSalary - this.calculateDependentsValue() - this.calculateInssValue();
+    return this.person.getTotalSalary() - this.calculateDependentsValue() - this.calculateInssValue();
   }
 
   public static double calculateExemption() {
