@@ -2,22 +2,20 @@ package fit.core;
 
 import fit.application.abstracts.DiscountTable;
 import fit.application.abstracts.RateTable;
-import fit.application.impl.DiscountTable2021;
-import fit.application.impl.RateTable2021;
+import fit.application.factories.DiscountTableFactory;
+import fit.application.factories.RateTableFactory;
 import fit.domain.Person;
 
 public class IrpfCalculator {
-  private int year;
   private Person person;
   private RateTable rateTable;
   private DiscountTable discountTable;
 
   public IrpfCalculator(int year, Person person) {
     super();
-    this.year = year;
     this.person = person;
-    this.rateTable = new RateTable2021();
-    this.discountTable = new DiscountTable2021();
+    this.rateTable = RateTableFactory.build(year);
+    this.discountTable = DiscountTableFactory.build(year);
   }
 
   public double calculateInssValue() {
